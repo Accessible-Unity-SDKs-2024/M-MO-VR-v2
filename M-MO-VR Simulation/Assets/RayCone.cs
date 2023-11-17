@@ -85,6 +85,8 @@ public class RayCone : MonoBehaviour
                     Vector3 newTarg = transform.TransformDirection(targetPos);
                     Ray ray = new Ray(startPos, targetPos);
 
+                    ActionLog.LogAction(ActionLog.ACTIONS[0], startPos);
+
                     // If a Raycast of length 16 units detectes a hit.
                     if (Physics.Raycast(ray, out RaycastHit hit, 16, ignoreLayer))
                     {
@@ -106,6 +108,8 @@ public class RayCone : MonoBehaviour
                             Debug.Log(hit.transform.name);
                             Debug.Log(hit.transform.gameObject.layer);
                             ClDis = distance;
+
+                            ActionLog.LogAction(ActionLog.ACTIONS[1], hitPoint);
 
                             //Selects audio Clip by Height
                             if (ObjY > 0 && ObjY < 0.3)

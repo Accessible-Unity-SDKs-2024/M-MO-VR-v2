@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43424192, g: 0.4811309, b: 0.56203675, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731224, g: 0.38074207, b: 0.35872674, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8801,6 +8801,86 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &319202379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 319202381}
+  - component: {fileID: 319202380}
+  m_Layer: 0
+  m_Name: ActionLogger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &319202380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319202379}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303bfe189d9d6624bb6f34087a25ed54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showSonarCasts: 1
+  showSonarHits: 0
+  showHapticWaypoints: 1
+  showHapticImpulses: 0
+  waypoints:
+  - {fileID: 1432517311}
+  - {fileID: 536061236}
+  - {fileID: 1462335683}
+  - {fileID: 445084118}
+  - {fileID: 1584311383}
+  - {fileID: 728205742}
+  - {fileID: 1133562745}
+  - {fileID: 1364496370}
+  - {fileID: 1924082837}
+  - {fileID: 1930770994}
+  - {fileID: 1002070719}
+  - {fileID: 489103954}
+  - {fileID: 556989732}
+  - {fileID: 1584655702}
+  - {fileID: 1069930082}
+  - {fileID: 1335954440}
+  - {fileID: 1144576050}
+  - {fileID: 384273010}
+  - {fileID: 1410629872}
+  - {fileID: 790518500}
+  - {fileID: 1376875104}
+  - {fileID: 1782845145}
+  - {fileID: 625837608}
+  - {fileID: 1490952444}
+  - {fileID: 1183225164}
+  - {fileID: 1186129088}
+  - {fileID: 461570657}
+  - {fileID: 1351300629}
+  - {fileID: 837385613}
+  - {fileID: 1618567649}
+  - {fileID: 1249304726}
+--- !u!4 &319202381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319202379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &319673704
 GameObject:
   m_ObjectHideFlags: 0

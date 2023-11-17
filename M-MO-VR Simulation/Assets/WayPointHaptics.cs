@@ -254,6 +254,8 @@ public class WayPointHaptics : MonoBehaviour
                         }
                     }
                 }
+
+                ActionLog.LogAction(ActionLog.ACTIONS[2], playerPosition);
             }
         }
     }
