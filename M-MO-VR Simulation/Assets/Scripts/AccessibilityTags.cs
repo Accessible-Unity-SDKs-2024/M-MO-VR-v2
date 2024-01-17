@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AccessibilityTags : MonoBehaviour
+namespace AccessibilityTags
 {
-    [SerializeField]
-    private string altText;
-
-    public string AltText
+    public class AccessibilityTags : MonoBehaviour
     {
-        get;
-        set;
+        [SerializeField]
+        private string altText;
+
+        public string AltText
+        {
+            get;
+            set;
+        }
     }
 }
