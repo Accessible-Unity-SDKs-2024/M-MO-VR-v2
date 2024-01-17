@@ -23,21 +23,17 @@ public class ManualAccessibility : Editor
             {
                 script.AltText = selectedObject.name;
                 Debug.Log("Alt Text successfully updated for " + selectedObject.name);
-                // Mark selected GameObject dirty to save changes
-                EditorUtility.SetDirty(selectedObject);
-                // Mark scene dirty to save changes to the scene
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
             }
             else // Otherwise, add altText as object's name
             {
-                script = Undo.AddComponent<AccessibilityTags.AccessibilityTags>((selectedObject));
+                script = Undo.AddComponent<AccessibilityTags.AccessibilityTags>(selectedObject);
                 script.AltText = selectedObject.name;
                 Debug.Log("Alt Text successfully added to " + selectedObject.name);
-                // Mark selected GameObject as dirty to save changes
-                EditorUtility.SetDirty(selectedObject);
-                // Mark scene dirty to save changes to the scene
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
             }
+            // Mark selected GameObject as dirty to save changes
+            EditorUtility.SetDirty(selectedObject);
+            // Mark scene dirty to save changes to the scene
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
         else
         {
