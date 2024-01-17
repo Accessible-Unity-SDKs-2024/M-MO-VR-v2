@@ -11,8 +11,8 @@ namespace AccessibilityTags
 
         public string AltText
         {
-            get;
-            set;
+            get{ return altText; }
+            set{ altText = value; }
         }
     }
 }
