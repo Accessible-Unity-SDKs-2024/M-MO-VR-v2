@@ -37,49 +37,7 @@ public class ManualAccessibility : Editor
         }
         else
         {
-            Debug.Log("Failed to add Alt Text (selected object may not have a Mesh Collider script)");
+            Debug.Log("Failed to add Alt Text " + selectedObject.name + " (selected object may not have a Mesh Collider script)");
         }
     }
-
-    // private void OnEnable()
-    // {
-    //      altText = serializedObject.FindProperty("altText");
-
-    //     // If altText property doesn't exist, create it
-    //     if (altText == null)
-    //     {
-    //         serializedObject.Update();
-            
-    //         // Create new serialized altText property by adding new field after all other fields (m_Script)
-    //         SerializedProperty serialProps = serializedObject.FindProperty("m_Script");
-    //         altText = serialProps.Copy();
-    //         altText.Next(false);
-            
-    //         // Set altText to the empty string
-    //         altText.stringValue = "";
-    //         serializedObject.ApplyModifiedProperties();
-    //         EditorUtility.SetDirty(target);
-    //         // Save the changes to the scene
-    //         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-    //     }
-    // }
-
-    // public override void OnInspectorGUI()
-    // {
-       
-    //     serializedObject.Update();
-
-    //     DrawDefaultInspector(); // Draw the default inspector for the target script
-
-    //     EditorGUILayout.Space(); // Add space between default inspector and custom buttons
-
-    //     EditorGUILayout.PropertyField(altText, new GUIContent("Alt-Text"));
-
-    //     serializedObject.ApplyModifiedProperties();
-            
-    //     // Mark selected GameObject as dirty to save changes
-    //     EditorUtility.SetDirty(target);
-    //     // Save the changes to the scene
-    //     EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
-    // }
 }

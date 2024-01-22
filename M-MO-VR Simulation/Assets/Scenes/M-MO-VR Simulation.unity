@@ -31717,7 +31717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a94a82345c24488a5aa1ac4d09e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  altText: 
+  altText: Wall
 --- !u!1001 &1106727244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46685,7 +46685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0a94a82345c24488a5aa1ac4d09e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  altText: This is a wall.
+  altText: Wall
 --- !u!1 &1611763185
 GameObject:
   m_ObjectHideFlags: 0
@@ -52723,6 +52723,7 @@ GameObject:
   - component: {fileID: 1870519462}
   - component: {fileID: 1870519461}
   - component: {fileID: 1870519464}
+  - component: {fileID: 1870519465}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -52823,6 +52824,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: 
   description: 
+--- !u!114 &1870519465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870519459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0a94a82345c24488a5aa1ac4d09e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  altText: Wall
 --- !u!1 &1875312716
 GameObject:
   m_ObjectHideFlags: 0
