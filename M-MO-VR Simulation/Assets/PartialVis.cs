@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using AccessibilityTags;
 
 
 
@@ -19,6 +20,7 @@ public class PartialVis : MonoBehaviour
     [SerializeField] Color32 trueColor;
     [SerializeField] Color32 falseColor;
 
+    AccessibilityTags.AccessibilityTags tags;
     Object objectInfo;
     
     // Start is called before the first frame update
@@ -61,20 +63,42 @@ public class PartialVis : MonoBehaviour
             }
 
 
+            //If the object hit has an accessibility script
+            if(hit.collider.gameObject.GetComponent<AccessibilityTags.AccessibilityTags>() != null && hit.collider.gameObject.GetComponent<Object>() != null)
+            {
+                tags = hit.collider.gameObject.GetComponent<AccessibilityTags.AccessibilityTags>();
+                objectInfo = hit.collider.gameObject.GetComponent<Object>();
+                Debug.Log("This is a " + objectInfo.objectName);
 
-
-            //If the object hit has an object script
-            if(hit.collider.gameObject.GetComponent<Object>() != null){
+                details.text = tags.AltText + "\n";
+                obj_name.text = objectInfo.objectName;
+            } 
+            else if (hit.collider.gameObject.GetComponent<Object>() != null)
+            {
                 objectInfo = hit.collider.gameObject.GetComponent<Object>();
                 Debug.Log("This is a "+objectInfo.objectName);
 
                 details.text = objectInfo.description + "\n";
                 obj_name.text = objectInfo.objectName;
             } 
-            else {
+            else 
+            {
                 details.text = "None";
                 obj_name.text = "None";
             }
+
+            // //If the object hit has an object script
+            // if(hit.collider.gameObject.GetComponent<Object>() != null){
+            //     objectInfo = hit.collider.gameObject.GetComponent<Object>();
+            //     Debug.Log("This is a "+objectInfo.objectName);
+
+            //     details.text = objectInfo.description + "\n";
+            //     obj_name.text = objectInfo.objectName;
+            // } 
+            // else {
+            //     details.text = "None";
+            //     obj_name.text = "None";
+            // }
         }
     }
     public void resetText(){
