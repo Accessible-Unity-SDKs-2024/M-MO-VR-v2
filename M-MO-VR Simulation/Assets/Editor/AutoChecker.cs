@@ -27,15 +27,35 @@ using AccessibilityTags;
 
 public class AutoChecker : Editor
 {    
-    // Check if altText is empty
+    if (script.AltText != null)
+    {
+        // If altText is empty
+        if (script.AltText == "")
+        {
+            // run AutoAccessibility.cs to fill it out probably or alert developer
+        }
+        // If altText is filled out
+        else
+        {
+            // Check if altText is a duplicate (same name as another object or ends with a number)
+            
+            // code here to compare altText of one object to altText of another object
 
-
-    // Check if altText is filled out
-
-
-    // Check if altText is a duplicate (same name as another object or ends with a number)
-
-
-    // Check if altText is only one word
+            // Check if altText is only one word
+            if (script.AltText.Contains(" "))
+            {
+                Debug.Log("Alt Text is more than one word for " + obj.name);
+            }
+            else
+            {
+                // alert developer asking if they are sure about keeping it as one word
+            }
+        }
+    }
+    else
+    {
+        Debug.Log("Alt Text is null for " + obj.name);
+        // alert developer
+    }
 
 }
