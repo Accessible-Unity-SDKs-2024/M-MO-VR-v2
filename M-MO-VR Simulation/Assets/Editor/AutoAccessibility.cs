@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -23,14 +25,25 @@ public class AutoAccessibility : Editor
                 // Check if object exists and has a Mesh Collider script attached
                 if (renderer != null && renderer.enabled == true)
                 {
+                    string text = "This is a " + obj.name + ". ";
+
+                    // Check if object has a description somewhere
+                    Component[] components = obj.GetComponents<Component>();
+                    foreach (Component component in components)
+                    {
+                        Type type = component.GetType();
+                        PropertyInfo descriptionProperty = type.GetProperty("description");
+
+                        if (descriptionProperty != null)
+                        {
+                            string description = (string)descriptionProperty.GetValue(component, null);
+                            Debug.Log("Description found in component: " + type.Name + " - " + description);
+                            text += description + " ";
+                        }
+                    }
+
                     // Store object's AccessibilityTags script, if it exists
                     AccessibilityTags.AccessibilityTags script = obj.GetComponent<AccessibilityTags.AccessibilityTags>();
-                    string text = "This is a " + obj.name + ". ";
-                    Object objectScript = obj.GetComponent<Object>();
-                    if (objectScript != null)
-                    {
-                        text += objectScript.description + " ";
-                    }
                     // If script exists, update altText to object's name
                     if (script != null)
                     {
@@ -45,7 +58,7 @@ public class AutoAccessibility : Editor
                         script.AltText = text;
                         Debug.Log("Alt Text successfully updated for " + obj.name);
                     }
-                    else // Otherwise, add altText as object's name
+                    else // Otherwise, add accessibility script and altText
                     {
                         script = Undo.AddComponent<AccessibilityTags.AccessibilityTags>(obj);
                         script.AltText = text;
@@ -56,7 +69,7 @@ public class AutoAccessibility : Editor
                 }
                 else
                 {
-                    Debug.Log("Failed to add Alt Text to " + obj.name + " (selected object may not have a Mesh Collider script)");
+                    Debug.Log("Failed to add Alt Text to " + obj.name + " (selected object may not have an active Renderer)");
                 }
             }
         }
