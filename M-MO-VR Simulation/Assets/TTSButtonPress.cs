@@ -143,7 +143,7 @@ public class TTSButtonPress : MonoBehaviour
             // Edge case: If details field is blank / clicking on walls.
             if (partialVis.activeSelf && !uiMenu.activeSelf && (pVDetails.text != ""))
             {
-                speakPV();
+                SpeakPV();
                 //StartCoroutine(SpeakDetails());
             }
             else if (partialVis.activeSelf && (pVDetails.text == ""))
@@ -166,7 +166,7 @@ public class TTSButtonPress : MonoBehaviour
         {
             if (partialVis.activeSelf && (pVDetails.text != ""))
             {
-                speakPV();
+                SpeakPV();
                 //StartCoroutine(SpeakDetails());
             }
             else if (partialVis.activeSelf)
@@ -190,7 +190,7 @@ public class TTSButtonPress : MonoBehaviour
         {
             if (partialVis.activeSelf && (pVDetails.text != ""))
             {
-                speakPV();
+                SpeakPV();
                 //StartCoroutine(SpeakDetails());
             }
             else if (partialVis.activeSelf && (pVDetails.text == ""))
@@ -230,7 +230,7 @@ public class TTSButtonPress : MonoBehaviour
             if (partialVis.activeSelf && (pVDetails.text != ""))
             {
                 //StartCoroutine(SpeakDetails());
-                speakPV();
+                SpeakPV();
             }
             else if (partialVis.activeSelf && (pVDetails.text == ""))
             {
@@ -248,7 +248,7 @@ public class TTSButtonPress : MonoBehaviour
         }
     }
 
-    public void speakPV()
+    public void SpeakPV()
     {
         if (pVName.text == "Door" || pVName.text == "Door Handle")
         {

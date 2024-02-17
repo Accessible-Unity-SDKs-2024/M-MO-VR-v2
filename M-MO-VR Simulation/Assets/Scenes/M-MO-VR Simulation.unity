@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43424192, g: 0.4811309, b: 0.56203675, a: 1}
+  m_IndirectSpecularColor: {r: 0.373122, g: 0.38074183, b: 0.35872623, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -44821,6 +44821,8 @@ MonoBehaviour:
   falseColor:
     serializedVersion: 2
     rgba: 0
+  ttsEnabled: 1
+  ttsSpeaker: {fileID: 75668700}
 --- !u!114 &1548537458
 MonoBehaviour:
   m_ObjectHideFlags: 0

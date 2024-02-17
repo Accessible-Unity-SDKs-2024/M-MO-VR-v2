@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Facebook.WitAi.TTS.Utilities;
 
 
 
@@ -16,16 +17,24 @@ public class PartialVis : MonoBehaviour
     public TextMeshProUGUI details;
     public TextMeshProUGUI obj_name;
 
+    [Header("Colors")]
     [SerializeField] Color32 trueColor;
     [SerializeField] Color32 falseColor;
 
-    Object objectInfo;
+    [Header("Text-to-Speech")]
+    [SerializeField] private bool ttsEnabled = true;
+    [SerializeField] private TTSSpeaker ttsSpeaker;
+    private Assets.VisionReader visionReader;
+
+
     
     // Start is called before the first frame update
     void Start()
     {
         trueColor = Color.green;
         falseColor = Color.red;
+
+        visionReader = new Assets.VisionReader(ttsSpeaker);
     }
 
     // Update is called once per frame
@@ -39,42 +48,46 @@ public class PartialVis : MonoBehaviour
     
 
     void Scan(){
+        Object objectInfo = new();
+        bool isInteractable = false;
         //Raycast send
-        RaycastHit hit;
         Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
-        
-        
+
+
         //If the raycast hits
-        if(Physics.Raycast(ray, out hit, 100)) // Ray hit something
+        if (Physics.Raycast(ray, out RaycastHit hit, 100)) // Ray hit something
         {
             //Debug.Log(hit.collider.tag);
             //Debug.Log(hit.collider.gameObject);
             //Debug.Log(hit.collider.name);
 
-            //Set the interactable field appropriately
-            if(hit.collider.tag == "Interactable"){
-                interactable.text = "True";
-                interactable.color = trueColor;
-            } else{
-                interactable.text = "False";
-                interactable.color = falseColor;
-            }
-
-
-
 
             //If the object hit has an object script
             if(hit.collider.gameObject.GetComponent<Object>() != null){
                 objectInfo = hit.collider.gameObject.GetComponent<Object>();
-                Debug.Log("This is a "+objectInfo.objectName);
+                Debug.Log("This is a "+objectInfo.name);
 
                 details.text = objectInfo.description + "\n";
-                obj_name.text = objectInfo.objectName;
+                obj_name.text = objectInfo.name;
             } 
             else {
                 details.text = "None";
                 obj_name.text = "None";
             }
+
+            //Set the interactable field appropriately
+            if(hit.collider.CompareTag("Interactable"))
+            {
+                interactable.text = "True";
+                interactable.color = trueColor;
+                isInteractable = true;
+            } else{
+                interactable.text = "False";
+                interactable.color = falseColor;
+            }
+
+            //Speak the name and description of the object
+            visionReader.Speak(objectInfo.name, objectInfo.description, isInteractable);
         }
     }
     public void resetText(){
@@ -88,6 +101,5 @@ public class PartialVis : MonoBehaviour
         
         return;
     }
-    
 }
 
