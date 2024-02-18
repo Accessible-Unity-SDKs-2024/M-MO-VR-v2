@@ -80,12 +80,10 @@ namespace Assets
         public void Speak(string name, string description, bool interactable = false)
         {
             if (string.IsNullOrEmpty(name)) return;
-            _nextObjectInfo = new VisionObject(name, description, interactable);
+            _currentObjectInfo = new VisionObject(name, description, interactable);
 
             if (!speakerEnabled) return;
-            if (_currentObjectInfo.Equals(_nextObjectInfo)) return;
-            _currentObjectInfo = _nextObjectInfo;
-
+            
             if (_isSpeaking) ttsSpeaker.Stop();
 
             string speakText = "This is a " + name + ". ";
