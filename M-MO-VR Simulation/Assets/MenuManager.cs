@@ -94,7 +94,7 @@ public class MenuManager : MonoBehaviour
                     if(OtherUi[i].activeSelf){
                         wasActive[i] = true;
                         OtherUi[i].SetActive(false);
-                        pv.resetText();
+                        pv.ResetText();
                     }
                     else{
                         wasActive[i] = false;

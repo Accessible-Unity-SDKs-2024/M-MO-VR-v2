@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
@@ -9,7 +7,7 @@ using Facebook.WitAi.TTS.Utilities;
 
 
 public class PartialVis : MonoBehaviour
-{   
+{
     public Transform raycastOrigin;
     public InputActionProperty button;
 
@@ -27,7 +25,7 @@ public class PartialVis : MonoBehaviour
     private Assets.VisionReader visionReader;
 
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,14 +38,16 @@ public class PartialVis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(button.action.WasPressedThisFrame()){
+        if (button.action.WasPressedThisFrame())
+        {
             Scan();
         }
     }
 
-    
 
-    void Scan(){
+
+    void Scan()
+    {
         Object objectInfo = new();
         bool isInteractable = false;
         //Raycast send
@@ -63,42 +63,48 @@ public class PartialVis : MonoBehaviour
 
 
             //If the object hit has an object script
-            if(hit.collider.gameObject.GetComponent<Object>() != null){
+            if (hit.collider.gameObject.GetComponent<Object>() != null)
+            {
                 objectInfo = hit.collider.gameObject.GetComponent<Object>();
-                Debug.Log("This is a "+objectInfo.name);
+                Debug.Log("This is a " + objectInfo.name);
 
                 details.text = objectInfo.description + "\n";
                 obj_name.text = objectInfo.name;
-            } 
-            else {
+            }
+            else
+            {
                 details.text = "None";
                 obj_name.text = "None";
             }
 
             //Set the interactable field appropriately
-            if(hit.collider.CompareTag("Interactable"))
+            if (hit.collider.CompareTag("Interactable"))
             {
                 interactable.text = "True";
                 interactable.color = trueColor;
                 isInteractable = true;
-            } else{
+            }
+            else
+            {
                 interactable.text = "False";
                 interactable.color = falseColor;
             }
 
             //Speak the name and description of the object
-            visionReader.Speak(objectInfo.name, objectInfo.description, isInteractable);
+            if (ttsEnabled) visionReader.Speak(objectInfo.name, objectInfo.description, isInteractable);
         }
     }
-    public void resetText(){
+    public void ResetText()
+    {
         interactable.text = "";
         details.text = "";
     }
 
-    public void setColors(Color32 trueC, Color32 falseC){
+    public void SetColors(Color32 trueC, Color32 falseC)
+    {
         trueColor = trueC;
         falseColor = falseC;
-        
+
         return;
     }
 }

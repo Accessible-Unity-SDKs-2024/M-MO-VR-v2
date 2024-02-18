@@ -24,15 +24,18 @@ namespace Assets
             // Debug log for speaker events
             ttsSpeaker.Events.OnClipLoadBegin.AddListener((_ttsSpeaker, s) => Debug.Log($"OnClipLoadBegin: {s}"));
             ttsSpeaker.Events.OnClipLoadSuccess.AddListener((_ttsSpeaker, s) => Debug.Log($"OnClipLoadSuccess: {s}"));
-            ttsSpeaker.Events.OnStartSpeaking.AddListener((_ttsSpeaker, s) => {
+            ttsSpeaker.Events.OnStartSpeaking.AddListener((_ttsSpeaker, s) =>
+            {
                 _isSpeaking = true;
                 Debug.Log($"OnStartSpeaking: {s}");
             });
-            ttsSpeaker.Events.OnFinishedSpeaking.AddListener((_ttsSpeaker, s) => {
+            ttsSpeaker.Events.OnFinishedSpeaking.AddListener((_ttsSpeaker, s) =>
+            {
                 _isSpeaking = false;
                 Debug.Log($"OnFinishedSpeaking: {s}");
             });
-            ttsSpeaker.Events.OnCancelledSpeaking.AddListener((_ttsSpeaker, s) => {
+            ttsSpeaker.Events.OnCancelledSpeaking.AddListener((_ttsSpeaker, s) =>
+            {
                 _isSpeaking = false;
                 Debug.Log($"OnCancelledSpeaking: {s}");
             });
@@ -66,7 +69,7 @@ namespace Assets
                 _isSpeaking = false;
                 Debug.Log($"OnCancelledSpeaking: {s}");
             });
-        }   
+        }
 
         /// <summary>
         /// Speak the name and description of the object
@@ -111,19 +114,26 @@ namespace Assets
         {
             return speakerEnabled;
         }
-    }
 
-    class VisionObject
-    {
-        public string name;
-        public string description;
-        public bool interactable;
-
-        public VisionObject(string name, string description, bool interactable)
+        class VisionObject
         {
-            name = "";
-            description = "";
-            interactable = false;
+            public string name;
+            public string description;
+            public bool interactable;
+
+            public VisionObject()
+            {
+                name = "";
+                description = "";
+                interactable = false;
+            }
+
+            public VisionObject(string name, string description, bool interactable)
+            {
+                this.name = name;
+                this.description = description;
+                this.interactable = interactable;
+            }
         }
     }
 }
