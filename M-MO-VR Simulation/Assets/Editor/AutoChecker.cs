@@ -17,6 +17,8 @@
 //     }
 // }
 
+using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -55,6 +57,7 @@ public class AutoChecker : Editor
                 }
                 else
                 {
+                    if(script.AltText.)
                     // alert developer asking if they are sure about keeping it as one word
                 }
             }
@@ -75,11 +78,73 @@ public class AutoChecker : Editor
             if (otherObj != obj)
             {
                 AccessibilityTags.AccessibilityTags otherScript = otherObj.GetComponent<AccessibilityTags.AccessibilityTags>();
+                //check for duplicate alt-text
+                //SHOULD WE ONLY CHECK THE ALT TEXT AND IGNORE THE NAME
+                //LIKE CHECK THE NAME AND TEXT SEPARATELY. 
+                //two things with diff names could have the same alt-text and vice versa?
                 if (otherScript != null && script.AltText == otherScript.AltText)
                 {
                     Debug.LogWarning("Duplicate altText found for objects: " + obj.name + " and " + otherObj.name);
                 }
+                //check for duplicate object names
+                if(obj.name == otherObj.name){
+                    Debug.LogWarning("Duplicate name found for objects with name: " + obj.name);
+
+                }
             }
         }
     }
+}
+
+//Kasidy
+public class AutoChecker2 : Editor{
+
+    // Store GameObjects
+    GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
+
+    foreach (GameObject obj in objects){
+        //only check objects with the accessibility tad
+        AccessibilityTags.AccessibilityTags script = obj.GetComponent<AccessibilityTags.AccessibilityTags>();
+        // If script exists, start checking
+        if (script != null){
+            //check if alt text is null or just " "
+            if(script.AltText == null || script.AltText == " "){
+                Debug.LogWarning("Object with name: " + obj.Name + " has no alt-text.");
+            }
+                
+            //check for duplicates
+            GameObject[] otherObjects = GameObject.FindObjectsOfType<GameObject>();
+
+            foreach (GameObject otherObj in otherObjects){
+                if (otherObj != obj){
+                    AccessibilityTags.AccessibilityTags otherScript = otherObj.GetComponent<AccessibilityTags.AccessibilityTags>();
+                    //check for duplicate alt-text
+                    
+                    //!!!!!!!!!!
+                    //SHOULD WE ONLY CHECK THE ALT TEXT AND IGNORE THE NAME
+                    //LIKE CHECK THE NAME AND TEXT SEPARATELY. 
+                    //two things with diff names could have the same alt-text and vice versa?
+                    //!!!!!!!!!!
+
+                    if (otherScript != null && script.AltText == otherScript.AltText){
+                        Debug.LogWarning("Duplicate altText found for objects: " + obj.name + " and " + otherObj.name);
+                    }
+                    //check for duplicate object names
+                    if(obj.name == otherObj.name){
+                        Debug.LogWarning("Duplicate name found for objects with name: " + obj.name);
+
+                    }
+                }
+            }
+                
+            //check if it is short
+            //change number???
+            //alt text format: "This is a " + obj.name + ". " + description + " ";
+            if(script.AltText.length < 30){
+                Debug.LogWarning("the alt-text for object with name: " + obj.Name + " is short. Consider adding more detail.")
+            }
+         }
+    }
+
+        
 }
