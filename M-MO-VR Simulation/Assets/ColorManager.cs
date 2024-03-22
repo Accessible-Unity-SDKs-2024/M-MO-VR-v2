@@ -70,7 +70,7 @@ public class ColorManager : MonoBehaviour
             }
             //Else, it is the true/false text
             else{
-                item.GetComponent<PartialVis>().setColors(Color.green, Color.red);
+                item.GetComponent<PartialVis>().SetColors(Color.green, Color.red);
             }
         }
     }
@@ -85,7 +85,7 @@ public class ColorManager : MonoBehaviour
             }
             //Else, it is the true/false text
             else{
-                item.GetComponent<PartialVis>().setColors(color, color);
+                item.GetComponent<PartialVis>().SetColors(color, color);
                 //Debug.Log("Changing the color of"+item);
             }
         }
@@ -101,7 +101,7 @@ public class ColorManager : MonoBehaviour
             }
             //Else, it is the true/false text
             else{
-                item.GetComponent<PartialVis>().setColors(tColor, fColor);
+                item.GetComponent<PartialVis>().SetColors(tColor, fColor);
                 //Debug.Log("Changing the color of"+item);
             }
         }
