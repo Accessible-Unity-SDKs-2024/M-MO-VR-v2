@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +13,7 @@ using AccessibilityTags;
 public class PartialVis : MonoBehaviour
 {   
     public Transform raycastOrigin;
-    public InputActionProperty button;
+    public InputAction button;
 
     public TextMeshProUGUI interactable;
     public TextMeshProUGUI details;
@@ -21,7 +23,17 @@ public class PartialVis : MonoBehaviour
     [SerializeField] Color32 falseColor;
 
     AccessibilityTags.AccessibilityTags tags;
-    Object objectInfo;
+    string objectName;
+
+    private void OnEnable()
+    {
+        button.Enable();
+    }
+
+    private void OnDisable()
+    {
+        button.Disable();
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -33,7 +45,7 @@ public class PartialVis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(button.action.WasPressedThisFrame()){
+        if(button.triggered){
             Scan();
         }
     }
@@ -64,22 +76,35 @@ public class PartialVis : MonoBehaviour
 
 
             //If the object hit has an accessibility script
-            if(hit.collider.gameObject.GetComponent<AccessibilityTags.AccessibilityTags>() != null && hit.collider.gameObject.GetComponent<Object>() != null)
+            if(hit.collider.gameObject.GetComponent<AccessibilityTags.AccessibilityTags>() != null)
             {
                 tags = hit.collider.gameObject.GetComponent<AccessibilityTags.AccessibilityTags>();
-                objectInfo = hit.collider.gameObject.GetComponent<Object>();
-                Debug.Log("This is a " + objectInfo.objectName);
+                objectName = hit.collider.gameObject.name;
+                Debug.Log("This is a " + objectName);
 
                 details.text = tags.AltText + "\n";
-                obj_name.text = objectInfo.objectName;
+                obj_name.text = objectName;
             } 
-            else if (hit.collider.gameObject.GetComponent<Object>() != null)
+            else if (hit.collider.gameObject.GetComponent<UnityEngine.Object>() != null)
             {
-                objectInfo = hit.collider.gameObject.GetComponent<Object>();
-                Debug.Log("This is a "+objectInfo.objectName);
+                objectName = hit.collider.gameObject.name;
+                Debug.Log("This is a "+objectName);
 
-                details.text = objectInfo.description + "\n";
-                obj_name.text = objectInfo.objectName;
+                Component[] components = hit.collider.gameObject.GetComponents<Component>();
+                foreach (Component component in components)
+                {
+                    Type type = component.GetType();
+                    PropertyInfo descriptionProperty = type.GetProperty("description");
+
+                    if (descriptionProperty != null)
+                    {
+                        string description = (string)descriptionProperty.GetValue(component, null);
+                        details.text = description + "\n";
+                        break;
+                    }
+                }
+
+                obj_name.text = objectName;
             } 
             else 
             {

@@ -69,7 +69,8 @@ public class AutoChecker : Editor
                             // If alt text is empty
                             if (script.AltText == "")
                             {
-                                AutoAccessibility.AddField();
+                                // AutoAccessibility.AddField();
+                                EditorGUILayout.HelpBox("This object needs alt text.", MessageType.Warning);
                             }
                             else // If alt text is filled out
                             {
