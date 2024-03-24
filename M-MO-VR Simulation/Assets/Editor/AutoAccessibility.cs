@@ -1,8 +1,8 @@
-using System;
-using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using System;
+using System.Reflection;
 using AccessibilityTags;
 
 // Editor script that Adds AltText to ALL GameObjects
@@ -11,42 +11,53 @@ public class AutoAccessibility : Editor
 {    
     // Right-click option for GameObjects
     [MenuItem("Tools/Add Accessible Field(s) to entire scene")]
-    private static void AddField(MenuCommand menuCommand)
+    private static void AddFields(MenuCommand menuCommand)
     {
+    #if UNITY_EDITOR
         // Store GameObjects
         GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
         Renderer renderer;
+        MeshCollider collider;
         // Iterate through each object
         foreach (GameObject obj in objects)
         {
             if (obj != null)
             {
-                renderer = obj.GetComponent<Renderer>();
-                // Check if object exists and has a Mesh Collider script attached
-                if (renderer != null && renderer.enabled == true)
+                // Store object's AccessibilityTags script, if it exists
+                AccessibilityTags.AccessibilityTags script = obj.GetComponent<AccessibilityTags.AccessibilityTags>();
+                // If script exists, update altText to object's name
+                if (script == null)
                 {
-                    string text = "This is a " + obj.name + ". ";
-
-                    // Check if object has a description somewhere
-                    Component[] components = obj.GetComponents<Component>();
-                    foreach (Component component in components)
+                    script = Undo.AddComponent<AccessibilityTags.AccessibilityTags>(obj);
+                    Debug.Log("Alt Text successfully added to " + obj.name);
+                }
+                // Check if object exists and has an active Collider and a Renderer script attached
+                renderer = obj.GetComponent<Renderer>();
+                collider = obj.GetComponent<MeshCollider>();
+                if (collider != null && collider.enabled == true)
+                {
+                    if (renderer != null)
                     {
-                        Type type = component.GetType();
-                        PropertyInfo descriptionProperty = type.GetProperty("description");
+                        string text = "This is a " + obj.name + ". ";
 
-                        if (descriptionProperty != null)
+                        // Check if object has a description somewhere
+                        Component[] components = obj.GetComponents<Component>();
+                        foreach (Component component in components)
                         {
-                            string description = (string)descriptionProperty.GetValue(component, null);
-                            Debug.Log("Description found in component: " + type.Name + " - " + description);
-                            text += description + " ";
-                        }
-                    }
+                            if (component != null)
+                            {
+                                Type type = component.GetType();
+                                FieldInfo descriptionField = type.GetField("description", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy);
 
-                    // Store object's AccessibilityTags script, if it exists
-                    AccessibilityTags.AccessibilityTags script = obj.GetComponent<AccessibilityTags.AccessibilityTags>();
-                    // If script exists, update altText to object's name
-                    if (script != null)
-                    {
+                                if (descriptionField != null)
+                                {
+                                    string description = (string)descriptionField.GetValue(component);
+                                    Debug.Log("Description found in component: " + obj.name + " - " + type.Name);
+                                    text += description + " ";
+                                    break;
+                                }
+                            }
+                        }
                         // if (obj.interactable == true)
                         // {
                         //     text += "It is interactible.";
@@ -58,22 +69,47 @@ public class AutoAccessibility : Editor
                         script.AltText = text;
                         Debug.Log("Alt Text successfully updated for " + obj.name);
                     }
-                    else // Otherwise, add accessibility script and altText
+                    else
                     {
-                        script = Undo.AddComponent<AccessibilityTags.AccessibilityTags>(obj);
-                        script.AltText = text;
-                        Debug.Log("Alt Text successfully added to " + obj.name);
+                        Debug.Log("Failed to add Alt Text to " + obj.name + " (selected object may not have an active Renderer)");
                     }
-                    // Mark selected GameObject as dirty to save changes
-                    EditorUtility.SetDirty(obj);
                 }
                 else
                 {
-                    Debug.Log("Failed to add Alt Text to " + obj.name + " (selected object may not have an active Renderer)");
+                    Debug.Log("Failed to add Alt Text to " + obj.name + " (selected object may not have a Mesh Collider)");
+                }
+                // Mark selected GameObject as dirty to save changes
+                EditorUtility.SetDirty(obj);
+            }
+        }
+        // Mark scene dirty to save changes to the scene
+        EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    #endif
+    }
+
+    [MenuItem("Tools/Remove Accessible Field(s) from entire scene")]
+    private static void RemoveFields(MenuCommand menuCommand)
+    {
+    #if UNITY_EDITOR
+        // Store GameObjects
+        GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
+        // Iterate through each object
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null)
+            {
+                // Store object's AccessibilityTags script, if it exists
+                AccessibilityTags.AccessibilityTags script = obj.GetComponent<AccessibilityTags.AccessibilityTags>();
+                // If script exists, update altText to object's name
+                if (script != null)
+                {
+                    DestroyImmediate(script);
+                    Debug.Log("Accessibility Fields successfully removed from " + obj.name);
                 }
             }
         }
         // Mark scene dirty to save changes to the scene
         EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+    #endif
     }
 }
