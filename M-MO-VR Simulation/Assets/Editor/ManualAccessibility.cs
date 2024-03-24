@@ -8,7 +8,7 @@ using AccessibilityTags;
 // Editor script that Adds AltText to a GameObject
 [CustomEditor(typeof(GameObject))]
 public class ManualAccessibility : Editor
-{
+{    
     // Right-click option for GameObjects
     [MenuItem("GameObject/Add Accessible Field(s)")]
     private static void AddField(MenuCommand menuCommand)

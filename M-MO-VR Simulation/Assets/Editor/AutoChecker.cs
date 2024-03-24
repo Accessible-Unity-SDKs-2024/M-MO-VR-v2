@@ -64,29 +64,6 @@ public class AutoChecker : Editor
                 {
                     if (renderer != null)
                     {
-                        // string text = "This is a " + obj.name + ". ";
-
-                        // Check if object has a description somewhere
-                        //Component[] components = obj.GetComponents<Component>();
-                        //foreach (Component component in components)
-                        //{
-                        //    if (component != null)
-                        //    {
-                        //        Type type = component.GetType();
-                        //        FieldInfo descriptionField = type.GetField("description", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy);
-
-                        //        if (descriptionField != null)
-                        //        {
-                        //            string description = (string)descriptionField.GetValue(component);
-                        //            Debug.Log("Description found in component: " + obj.name + " - " + type.Name);
-                        //            // text += description + " ";
-                        //            break;
-                        //        }
-                        //    }
-                        //}
-                        // script.AltText = text;
-                        // Debug.Log("Alt Text successfully updated for " + obj.name);
-
                         if (script.AltText != null)
                         {
                             // If alt text is empty
@@ -198,14 +175,10 @@ public class AutoChecker : Editor
             {
                 AccessibilityTags.AccessibilityTags otherScript = otherObj.GetComponent<AccessibilityTags.AccessibilityTags>();
                 //check for duplicate alt-text
-                //SHOULD WE ONLY CHECK THE ALT TEXT AND IGNORE THE NAME
-                //LIKE CHECK THE NAME AND TEXT SEPARATELY. 
-                //two things with diff names could have the same alt-text and vice versa?
                 if (otherScript != null && script.AltText == otherScript.AltText)
                 {
                     EditorGUILayout.HelpBox("Duplicate alt text found. Please check if these objects should be differentiated more.", MessageType.Info);
                     Debug.LogWarning("Duplicate altText found for objects: " + obj.name + " and " + otherObj.name);
-                    EditorUtility.SetDirty(otherObj);
                 }
 
                 //check for duplicate object names
@@ -213,7 +186,6 @@ public class AutoChecker : Editor
                 {
                     EditorGUILayout.HelpBox("Duplicate Object Names found. Please check if these objects should be differentiated more.", MessageType.Info);
                     Debug.LogWarning("Duplicate name found for objects with name: " + obj.name);
-                    EditorUtility.SetDirty(otherObj);
                     continue;
                 }
 
@@ -226,7 +198,6 @@ public class AutoChecker : Editor
                 {
                     EditorGUILayout.HelpBox("Duplicate Object Names found. Please check if these objects should be differentiated more.", MessageType.Info);
                     Debug.LogWarning("Duplicate name found for objects with name: " + obj.name);
-                    EditorUtility.SetDirty(otherObj);
                 }
             }
             else
