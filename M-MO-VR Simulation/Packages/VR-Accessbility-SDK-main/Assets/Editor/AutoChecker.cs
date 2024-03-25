@@ -24,6 +24,8 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using AccessibilityTags;     
 using static AutoAccessibility;
+using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 // Editor script that Adds AltText to ALL GameObjects
@@ -32,7 +34,10 @@ using System.Text.RegularExpressions;
 // Emmanuelle
 public class AutoChecker : Editor
 {
-    public override void OnInspectorGUI()
+    //public override void OnInspectorGUI()
+    // Right-click option for GameObjects
+    [MenuItem("Tools/Check Alt-Text")]
+    private static void check(MenuCommand menuCommand)
     {
         // Draws the built-in inspector
         DrawDefaultInspector();
@@ -165,7 +170,7 @@ public class AutoChecker : Editor
     //}
 
     // check for duplicate alt text and duplicate object names
-    void CheckForDuplicateAltText(GameObject obj, AccessibilityTags.AccessibilityTags script)
+    private static void CheckForDuplicateAltText(GameObject obj, AccessibilityTags.AccessibilityTags script)
     {
         GameObject[] objectsInScene = GameObject.FindObjectsOfType<GameObject>();
         string nameWithoutNumber1 = RemoveNumberAtEnd(obj.name); // for later comparison
